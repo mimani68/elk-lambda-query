@@ -93,3 +93,8 @@ We use `testing` package that is built-in in Golang and you can simply run the f
 ```shell
 go test -v ./elks/
 ```
+
+## Snapshot
+
+![](./docs/query.png)
+
