@@ -14,21 +14,38 @@ Globals:
     TracingEnabled: True
 
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  QueryFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: app/
-      Handler: app
+      CodeUri: query/
+      Handler: query
       Runtime: go1.x
       Architectures:
         - x86_64
       Events:
         CatchAll:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /elk
+            Path: /query
             Method: GET
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
+        Variables:
+          PARAM1: VALUE
+  UpdateReportFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: update-report/
+      Handler: update-report
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /update
+            Method: GET
+      Environment:
         Variables:
           PARAM1: VALUE
 

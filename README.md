@@ -6,7 +6,10 @@ This is a sample template for ***elk-function-as-service*** - Below is a brief e
 .
 ├── Makefile              <-- Make to automate build
 ├── README.md             <-- This instructions file
-├── app                   <-- Source code for a lambda function
+├── update-report         <-- Source code for a lambda function
+│   ├── main.go           <-- Lambda function code
+│   └── main_test.go      <-- Unit tests
+├── query                 <-- Source code for a lambda function
 │   ├── main.go           <-- Lambda function code
 │   └── main_test.go      <-- Unit tests
 └── template.yaml
@@ -40,7 +43,7 @@ make
 sam local start-api
 ```
 
-If the previous command ran successfully you should now be able to hit the following local endpoint to invoke your function `http://localhost:3000/elk`
+If the previous command ran successfully you should now be able to hit the following local endpoint to invoke your function `http://localhost:3000/query` or `http://localhost:3000/update`
 
 **SAM CLI** is used to emulate both Lambda and API Gateway locally and uses our `template.yaml` to understand how to bootstrap this environment (runtime, where the source code is, etc.) - The following excerpt is what the CLI will read in order to initialize an API and its routes:
 
@@ -50,7 +53,7 @@ Events:
     HelloWorld:
         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
         Properties:
-            Path: /elk
+            Path: /query
             Method: get
 ```
 
@@ -60,10 +63,10 @@ AWS Lambda Golang runtime requires a flat folder with the executable generated o
 
 ```yaml
 ...
-    FirstFunction:
+    QueryFunction:
         Type: AWS::Serverless::Function
         Properties:
-            CodeUri: hello_world/
+            CodeUri: query/
             ...
 ```
 
